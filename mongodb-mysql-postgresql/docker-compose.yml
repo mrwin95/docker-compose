@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  postgresql:
+    container_name: postgresql
+    image: postgres:latest
+    volumes:
+      - postgresql-data:/usr/share/postgresql/data
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=Thang123
+    healthcheck:
+      test: "pg_isready -U user --dbname=postgres"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    volumes:
+      - mysql-data:/usr/share/mysql/data
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Thang123
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    volumes:
+      - mongodb-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=Thang123
+    ports:
+      - 27017:27017
+    restart: always
+volumes:
+  postgresql-data:
+    driver: local
+  mysql-data:
+    driver: local
+  mongodb-data:
+    driver: local
